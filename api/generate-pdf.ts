@@ -49,7 +49,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   } catch (error: any) {
     console.error('Error generating PDF:', error);
-    return res.status(500).send({ error: 'An error occurred while generating the PDF.', details: error.message });
+    console.error('Full Error Details:', JSON.stringify(error, null, 2));
+    return res.status(500).send({ 
+        error: 'An error occurred while generating the PDF.', 
+        details: error.message,
+        stack: error.stack,
+    });
   } finally {
     // Ensure the browser is closed
     if (browser) {

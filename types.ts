@@ -65,3 +65,8 @@ export interface StyleOptions {
     template: Template;
     colorPalette: ColorPalette;
 }
+
+export interface User {
+  email: string;
+  role: 'admin' | 'user';
+}
