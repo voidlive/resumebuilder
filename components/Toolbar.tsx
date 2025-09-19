@@ -1,13 +1,10 @@
 
 import React from 'react';
-import { Template, ColorPalette, Theme } from '../types';
+import { Template, ColorPalette } from '../types';
 import { DownloadIcon } from './icons/DownloadIcon';
 import { UndoIcon } from './icons/UndoIcon';
 import { RedoIcon } from './icons/RedoIcon';
 import { LoadingSpinner } from './icons/LoadingSpinner';
-import { SunIcon } from './icons/SunIcon';
-import { MoonIcon } from './icons/MoonIcon';
-
 
 interface ToolbarProps {
   template: Template;
@@ -20,8 +17,6 @@ interface ToolbarProps {
   onRedo: () => void;
   canUndo: boolean;
   canRedo: boolean;
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
 }
 
 const templates: { id: Template; name: string }[] = [
@@ -43,45 +38,34 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   template, setTemplate, 
   colorPalette, setColorPalette, 
   onDownloadPDF, isDownloadingPdf,
-  onUndo, onRedo, canUndo, canRedo,
-  theme, setTheme
+  onUndo, onRedo, canUndo, canRedo
 }) => {
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
 
   return (
     <div className="flex items-center gap-2 md:gap-4 flex-wrap">
-       <button onClick={toggleTheme} className="p-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700" aria-label="Toggle theme">
-          {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-      </button>
-
-      <div className="h-6 w-px bg-zinc-300 dark:bg-zinc-700 hidden md:block"></div>
-      
       <div className="flex items-center gap-1">
-          <button onClick={onUndo} disabled={!canUndo} className="p-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed" aria-label="Undo">
+          <button onClick={onUndo} disabled={!canUndo} className="p-2 rounded-md hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed" aria-label="Undo">
             <UndoIcon />
           </button>
-           <button onClick={onRedo} disabled={!canRedo} className="p-2 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed" aria-label="Redo">
+           <button onClick={onRedo} disabled={!canRedo} className="p-2 rounded-md hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed" aria-label="Redo">
             <RedoIcon />
           </button>
       </div>
 
-      <div className="h-6 w-px bg-zinc-300 dark:bg-zinc-700 hidden md:block"></div>
+      <div className="h-6 w-px bg-zinc-300 hidden md:block"></div>
 
       <div className="flex items-center gap-2">
-        <label htmlFor="template-select" className="text-sm font-medium text-gray-600 dark:text-gray-300 hidden md:block">Template:</label>
-        <select id="template-select" value={template} onChange={e => setTemplate(e.target.value as Template)} className="p-2 border border-zinc-300 dark:border-zinc-600 rounded-md text-sm bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <label htmlFor="template-select" className="text-sm font-medium text-gray-600 hidden md:block">Template:</label>
+        <select id="template-select" value={template} onChange={e => setTemplate(e.target.value as Template)} className="p-2 border border-zinc-300 rounded-md text-sm bg-white text-zinc-900 focus:ring-2 focus:ring-blue-500 focus:outline-none">
           {templates.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
         </select>
       </div>
 
       <div className="flex items-center gap-2">
-         <label className="text-sm font-medium text-gray-600 dark:text-gray-300 hidden md:block">Color:</label>
+         <label className="text-sm font-medium text-gray-600 hidden md:block">Color:</label>
          <div className="flex items-center gap-2">
           {colors.map(c => (
-            <button key={c.id} onClick={() => setColorPalette(c.id)} className={`w-6 h-6 rounded-full ${c.hex} transition-transform transform hover:scale-110 ${colorPalette === c.id ? 'ring-2 ring-offset-2 ring-blue-500 ring-offset-white dark:ring-offset-zinc-900' : ''}`}></button>
+            <button key={c.id} onClick={() => setColorPalette(c.id)} className={`w-6 h-6 rounded-full ${c.hex} transition-transform transform hover:scale-110 ${colorPalette === c.id ? 'ring-2 ring-offset-2 ring-blue-500 ring-offset-white' : ''}`}></button>
           ))}
          </div>
       </div>

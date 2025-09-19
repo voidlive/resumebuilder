@@ -8,12 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <script>
-      // Enable class-based dark mode in Tailwind
-      tailwind.config = {
-        darkMode: 'class',
-      }
-    </script>
     <style>
       .font-inter { font-family: 'Inter', sans-serif; }
       .font-lora { font-family: 'Lora', serif; }
@@ -26,7 +20,7 @@
       .font-georgia { font-family: 'Georgia', serif; }
       .font-times-new-roman { font-family: '"Times New Roman"', serif; }
 
-      /* Custom Scrollbar - Light Theme */
+      /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 10px;
       }
@@ -39,17 +33,6 @@
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #64748b; /* slate-500 */
-      }
-      
-      /* Custom Scrollbar - Dark Theme */
-      html.dark ::-webkit-scrollbar-track {
-        background: #18181b; /* zinc-900 */
-      }
-      html.dark ::-webkit-scrollbar-thumb {
-        background: #52525b; /* zinc-600 */
-      }
-      html.dark ::-webkit-scrollbar-thumb:hover {
-        background: #71717a; /* zinc-500 */
       }
 
       /* A4 Sizing & Print-friendly styles */
@@ -110,7 +93,7 @@
 }
 </script>
 </head>
-<body class="bg-slate-100 dark:bg-zinc-950">
+<body class="bg-slate-100">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>

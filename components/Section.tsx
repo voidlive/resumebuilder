@@ -45,7 +45,7 @@ export const Section: React.FC<SectionProps> = ({
   }
   
   const headerContent = (
-    <div className="w-full flex justify-between items-center p-4 bg-white dark:bg-zinc-800 rounded-t-lg hover:bg-zinc-50 dark:hover:bg-zinc-700">
+    <div className="w-full flex justify-between items-center p-4 bg-white rounded-t-lg hover:bg-zinc-50">
         <div className="flex items-center gap-2 flex-grow">
             {isEditingTitle ? (
                  <input 
@@ -54,22 +54,22 @@ export const Section: React.FC<SectionProps> = ({
                     onChange={(e) => setCurrentTitle(e.target.value)}
                     onBlur={handleTitleBlur}
                     onKeyDown={handleTitleKeyDown}
-                    className="text-lg font-semibold text-zinc-900 dark:text-white bg-zinc-100 dark:bg-zinc-900 border border-blue-400 rounded-md px-2 -ml-2"
+                    className="text-lg font-semibold text-zinc-900 bg-zinc-100 border border-blue-400 rounded-md px-2 -ml-2"
                     autoFocus
                 />
             ) : (
-                <h2 className="text-lg font-semibold text-zinc-800 dark:text-gray-100" onDoubleClick={() => onTitleChange && setIsEditingTitle(true)}>
+                <h2 className="text-lg font-semibold text-zinc-800" onDoubleClick={() => onTitleChange && setIsEditingTitle(true)}>
                     {title}
                 </h2>
             )}
         </div>
         <div className="flex items-center gap-2">
-            {onMoveUp && <button onClick={onMoveUp} disabled={isFirst} className="p-1 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed"><ArrowUpIcon /></button>}
-            {onMoveDown && <button onClick={onMoveDown} disabled={isLast} className="p-1 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed"><ArrowDownIcon /></button>}
+            {onMoveUp && <button onClick={onMoveUp} disabled={isFirst} className="p-1 rounded-full hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed"><ArrowUpIcon /></button>}
+            {onMoveDown && <button onClick={onMoveDown} disabled={isLast} className="p-1 rounded-full hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed"><ArrowDownIcon /></button>}
             {isDeletable && <button onClick={onDelete} className="p-1 text-red-500 rounded-full hover:bg-red-500 hover:text-white"><TrashIcon /></button>}
             {isCollapsible && (
                  <svg
-                    className={`w-6 h-6 text-gray-500 dark:text-gray-400 transform transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                    className={`w-6 h-6 text-gray-500 transform transition-transform ${isOpen ? 'rotate-180' : ''}`}
                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -80,7 +80,7 @@ export const Section: React.FC<SectionProps> = ({
   );
 
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md">
+    <div className="bg-white rounded-lg shadow-md">
       {isCollapsible ? (
           <button
             className="w-full text-left focus:outline-none"
@@ -93,7 +93,7 @@ export const Section: React.FC<SectionProps> = ({
           headerContent
       )}
       
-      {(!isCollapsible || isOpen) && <div className="p-4 border-t border-zinc-200 dark:border-zinc-700">{children}</div>}
+      {(!isCollapsible || isOpen) && <div className="p-4 border-t border-zinc-200">{children}</div>}
     </div>
   );
 };

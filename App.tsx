@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { ResumeForm } from './components/ResumeForm';
 import { ResumePreview } from './components/ResumePreview';
 import { Toolbar } from './components/Toolbar';
-import { ResumeData, Template, ColorPalette, ResumeSection, SectionContent, Theme } from './types';
+import { ResumeData, Template, ColorPalette, ResumeSection, SectionContent } from './types';
 import { initialResumeData } from './constants';
 import { LoadingSpinner } from './components/icons/LoadingSpinner';
 import jsPDF from 'jspdf';
@@ -85,25 +85,8 @@ function App() {
 
   const [template, setTemplate] = useState<Template>('classic');
   const [colorPalette, setColorPalette] = useState<ColorPalette>('blue');
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) return savedTheme;
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
-  });
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
   const [notification, setNotification] = useState<{ message: string; type: 'info' | 'error' } | null>(null);
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   const generatePdfClientSide = async () => {
     const resumeElement = document.getElementById('resume-preview');
@@ -300,8 +283,8 @@ function App() {
       {notification && (
         <div 
             className={`fixed top-24 right-8 max-w-sm z-50 rounded-lg shadow-2xl p-4 no-print
-              ${notification.type === 'info' ? 'bg-blue-100 border border-blue-400 text-blue-800 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-600' : ''}
-              ${notification.type === 'error' ? 'bg-red-100 border border-red-400 text-red-800 dark:bg-red-900 dark:text-red-200 dark:border-red-600' : ''}`}
+              ${notification.type === 'info' ? 'bg-blue-100 border border-blue-400 text-blue-800' : ''}
+              ${notification.type === 'error' ? 'bg-red-100 border border-red-400 text-red-800' : ''}`}
             role="alert"
         >
             <div className="flex">
@@ -318,16 +301,16 @@ function App() {
       )}
       {isDownloadingPdf && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center z-50 no-print" aria-live="polite" aria-busy="true">
-            <div className="bg-zinc-800 p-6 rounded-lg shadow-xl flex items-center gap-4">
+            <div className="bg-white p-6 rounded-lg shadow-xl flex items-center gap-4">
               <LoadingSpinner />
-              <span className="text-lg font-medium text-white">Generating your PDF...</span>
+              <span className="text-lg font-medium text-zinc-800">Generating your PDF...</span>
             </div>
         </div>
       )}
-      <div className="min-h-screen font-inter text-zinc-800 dark:text-gray-200">
-        <header className="bg-white dark:bg-zinc-900 shadow-md p-4 sticky top-0 z-20 no-print">
+      <div className="min-h-screen font-inter text-zinc-800">
+        <header className="bg-white shadow-md p-4 sticky top-0 z-20 no-print">
           <div className="container mx-auto flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-zinc-900 dark:text-white">Resume Builder</h1>
+            <h1 className="text-2xl font-bold text-zinc-900">Resume Builder</h1>
             <Toolbar
               template={template}
               setTemplate={setTemplate}
@@ -339,8 +322,6 @@ function App() {
               onRedo={redo}
               canUndo={canUndo}
               canRedo={canRedo}
-              theme={theme}
-              setTheme={setTheme}
             />
           </div>
         </header>

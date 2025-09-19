@@ -60,7 +60,6 @@ export interface ResumeData {
 
 export type Template = 'classic' | 'corporate' | 'creative' | 'executive' | 'technical';
 export type ColorPalette = 'blue' | 'green' | 'black' | 'purple';
-export type Theme = 'light' | 'dark';
 
 export interface StyleOptions {
     template: Template;

@@ -17,11 +17,11 @@ interface ResumeFormProps {
 }
 
 // --- SHARED STYLES ---
-const inputClass = "p-2 border rounded-md bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full";
-const textareaClasses = "w-full p-2 border rounded-md bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
-const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1";
-const smallButtonClass = "text-red-600 hover:text-red-800 dark:text-red-500 dark:hover:text-red-400 font-medium flex items-center gap-1";
-const addButtonClass = "mt-2 text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-400 font-medium flex items-center gap-1";
+const inputClass = "p-2 border rounded-md bg-zinc-100 border-zinc-300 text-zinc-900 placeholder-zinc-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full";
+const textareaClasses = "w-full p-2 border rounded-md bg-zinc-100 border-zinc-300 text-zinc-900 placeholder-zinc-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
+const labelClass = "block text-sm font-medium text-gray-700 mb-1";
+const smallButtonClass = "text-red-600 hover:text-red-800 font-medium flex items-center gap-1";
+const addButtonClass = "mt-2 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1";
 
 
 // --- SECTION-SPECIFIC FORM COMPONENTS ---
@@ -36,7 +36,7 @@ const WorkExperienceForm: React.FC<{ items: WorkExperience[], onChange: (items: 
     return (
         <div>
             {items.map(exp => (
-                <div key={exp.id} className="p-4 border border-zinc-200 dark:border-zinc-700 rounded-md mb-4 space-y-3 bg-white dark:bg-zinc-900">
+                <div key={exp.id} className="p-4 border border-zinc-200 rounded-md mb-4 space-y-3 bg-white">
                     <input type="text" placeholder="Company" value={exp.company} onChange={e => handleChange(exp.id, 'company', e.target.value)} className={inputClass} />
                     <input type="text" placeholder="Role" value={exp.role} onChange={e => handleChange(exp.id, 'role', e.target.value)} className={inputClass} />
                     <input type="text" placeholder="Duration (e.g., Jan 2020 - Present)" value={exp.duration} onChange={e => handleChange(exp.id, 'duration', e.target.value)} className={inputClass} />
@@ -59,7 +59,7 @@ const EducationForm: React.FC<{ items: Education[], onChange: (items: Education[
     return (
         <div>
             {items.map(edu => (
-                <div key={edu.id} className="p-4 border border-zinc-200 dark:border-zinc-700 rounded-md mb-4 space-y-3 bg-white dark:bg-zinc-900">
+                <div key={edu.id} className="p-4 border border-zinc-200 rounded-md mb-4 space-y-3 bg-white">
                     <input type="text" placeholder="Institution" value={edu.institution} onChange={e => handleChange(edu.id, 'institution', e.target.value)} className={inputClass} />
                     <input type="text" placeholder="Degree" value={edu.degree} onChange={e => handleChange(edu.id, 'degree', e.target.value)} className={inputClass} />
                     <input type="text" placeholder="Duration (e.g., Aug 2012 - May 2016)" value={edu.duration} onChange={e => handleChange(edu.id, 'duration', e.target.value)} className={inputClass} />
@@ -81,7 +81,7 @@ const ProjectsForm: React.FC<{ items: Project[], onChange: (items: Project[]) =>
     return (
         <div>
             {items.map(proj => (
-                <div key={proj.id} className="p-4 border border-zinc-200 dark:border-zinc-700 rounded-md mb-4 space-y-2 bg-white dark:bg-zinc-900">
+                <div key={proj.id} className="p-4 border border-zinc-200 rounded-md mb-4 space-y-2 bg-white">
                     <input type="text" placeholder="Project Name" value={proj.name} onChange={e => handleChange(proj.id, 'name', e.target.value)} className={inputClass} />
                     <textarea placeholder="Description" value={proj.description} onChange={e => handleChange(proj.id, 'description', e.target.value)} rows={3} className={textareaClasses} />
                     <button onClick={() => removeItem(proj.id)} className={smallButtonClass}><TrashIcon /> Remove</button>
@@ -131,12 +131,12 @@ const SkillsForm: React.FC<{ skills: Record<string, string[]>, onChange: (skills
             <div className="mt-6 space-y-4">
                 {Object.entries(skills).map(([cat, skillList]) => (
                     <div key={cat}>
-                        <h3 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">{cat}</h3>
+                        <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider">{cat}</h3>
                         <div className="flex flex-wrap gap-2 mt-2">
                             {skillList.map(skill => (
-                                <div key={skill} className="flex items-center gap-2 px-3 py-1 bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white rounded-full text-sm font-medium">
+                                <div key={skill} className="flex items-center gap-2 px-3 py-1 bg-zinc-200 text-zinc-800 rounded-full text-sm font-medium">
                                     <span>{skill}</span>
-                                    <button onClick={() => removeSkill(cat, skill)} className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200">&times;</button>
+                                    <button onClick={() => removeSkill(cat, skill)} className="text-zinc-500 hover:text-zinc-700">&times;</button>
                                 </div>
                             ))}
                         </div>
@@ -158,7 +158,7 @@ const CustomSectionForm: React.FC<{ items: CustomItem[], onChange: (items: Custo
     return (
         <div>
             {items.map(item => (
-                <div key={item.id} className="p-4 border border-zinc-200 dark:border-zinc-700 rounded-md mb-4 space-y-3 bg-white dark:bg-zinc-900">
+                <div key={item.id} className="p-4 border border-zinc-200 rounded-md mb-4 space-y-3 bg-white">
                     <input type="text" placeholder="Title" value={item.title} onChange={e => handleChange(item.id, 'title', e.target.value)} className={inputClass} />
                     <input type="text" placeholder="Subtitle (e.g., location, date)" value={item.subtitle} onChange={e => handleChange(item.id, 'subtitle', e.target.value)} className={inputClass} />
                     <textarea placeholder="Description (optional)" value={item.description} onChange={e => handleChange(item.id, 'description', e.target.value)} rows={3} className={textareaClasses} />
@@ -245,18 +245,18 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
           </Section>
       ))}
 
-      <div className="p-4 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 rounded-b-lg">
-          <h3 className="font-semibold text-zinc-800 dark:text-gray-200 mb-2">Add a new section</h3>
+      <div className="p-4 bg-white border-t border-zinc-200 rounded-b-lg">
+          <h3 className="font-semibold text-zinc-800 mb-2">Add a new section</h3>
           <div className="flex flex-wrap gap-2">
-              <button onClick={() => onAddSection('experience')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Experience</button>
-              <button onClick={() => onAddSection('education')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Education</button>
-              <button onClick={() => onAddSection('projects')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Projects</button>
-              <button onClick={() => onAddSection('skills')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Skills</button>
-              <button onClick={() => onAddSection('certifications')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Certifications</button>
-              <button onClick={() => onAddSection('awards')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Awards</button>
-              <button onClick={() => onAddSection('volunteer')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Volunteer</button>
-              <button onClick={() => onAddSection('interests')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Interests</button>
-              <button onClick={() => onAddSection('custom')} className="bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-white px-3 py-1 rounded-md text-sm hover:bg-zinc-300 dark:hover:bg-zinc-600">Custom</button>
+              <button onClick={() => onAddSection('experience')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Experience</button>
+              <button onClick={() => onAddSection('education')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Education</button>
+              <button onClick={() => onAddSection('projects')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Projects</button>
+              <button onClick={() => onAddSection('skills')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Skills</button>
+              <button onClick={() => onAddSection('certifications')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Certifications</button>
+              <button onClick={() => onAddSection('awards')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Awards</button>
+              <button onClick={() => onAddSection('volunteer')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Volunteer</button>
+              <button onClick={() => onAddSection('interests')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Interests</button>
+              <button onClick={() => onAddSection('custom')} className="bg-zinc-200 text-zinc-800 px-3 py-1 rounded-md text-sm hover:bg-zinc-300">Custom</button>
           </div>
       </div>
 
