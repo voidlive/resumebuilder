@@ -18,25 +18,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   let browser = null;
 
   try {
-    // Launch a new browser instance using the serverless-friendly chromium package.
-    // Use the recommended 'new' headless mode for modern Puppeteer versions for better stability.
     browser = await puppeteer.launch({
       args: chromium.args,
       executablePath: await chromium.executablePath(),
-      // FIX: Cast 'new' to 'any' to bypass a TypeScript type error. The 'new' value is correct
-      // for modern Puppeteer versions but may not be reflected in the project's type definitions.
       headless: 'new' as any,
     });
 
     const page = await browser.newPage();
 
-    // Set the HTML content of the page
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    // Set page content, waiting only for the DOM to be ready
+    await page.setContent(html, { waitUntil: 'domcontentloaded' });
 
-    // Add a small, crucial delay. This gives client-side scripts like the 
-    // Tailwind CDN time to execute and apply styles before the PDF is generated.
-    // This prevents a common race condition where the PDF is created before styling is complete.
-    await new Promise(r => setTimeout(r, 500));
+    // **CRITICAL FIX**: Explicitly wait for the Tailwind JIT CDN script to finish.
+    // The script adds a style tag with the 'data-tailwindcss-jit' attribute once it has
+    // processed the HTML and applied all Tailwind classes. This is far more reliable
+    // than a fixed delay or networkidle, as it confirms styling is 100% complete.
+    await page.waitForSelector('style[data-tailwindcss-jit]', { timeout: 15000 });
     
     // Generate the PDF
     const pdfBuffer = await page.pdf({
@@ -54,6 +51,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   } catch (error: any) {
     console.error('Error generating PDF:', error);
+    if (error.name === 'TimeoutError') {
+        console.error('Puppeteer timed out waiting for the Tailwind CSS selector. The CDN script might be slow or failing.');
+    }
     console.error('Full Error Details:', JSON.stringify(error, null, 2));
     return res.status(500).send({ 
         error: 'An error occurred while generating the PDF.', 
