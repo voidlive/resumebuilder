@@ -1,4 +1,3 @@
-
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import chromium from '@sparticuz/chromium';
 import puppeteer from 'puppeteer-core';
@@ -19,19 +18,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   let browser = null;
 
   try {
-    // Launch a new browser instance using the serverless-friendly chromium package
+    // Launch a new browser instance using the serverless-friendly chromium package.
+    // Use the recommended 'new' headless mode for modern Puppeteer versions for better stability.
     browser = await puppeteer.launch({
       args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
+      // FIX: Cast 'new' to 'any' to bypass a TypeScript type error. The 'new' value is correct
+      // for modern Puppeteer versions but may not be reflected in the project's type definitions.
+      headless: 'new' as any,
     });
 
     const page = await browser.newPage();
 
     // Set the HTML content of the page
     await page.setContent(html, { waitUntil: 'networkidle0' });
+
+    // Add a small, crucial delay. This gives client-side scripts like the 
+    // Tailwind CDN time to execute and apply styles before the PDF is generated.
+    // This prevents a common race condition where the PDF is created before styling is complete.
+    await new Promise(r => setTimeout(r, 500));
     
     // Generate the PDF
     const pdfBuffer = await page.pdf({

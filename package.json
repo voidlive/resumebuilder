@@ -12,7 +12,12 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "jspdf": "^2.5.1",
-    "html2canvas": "^1.4.1"
+    "html2canvas": "^1.4.1",
+    "@vercel/node": "^5.3.23",
+    "@sparticuz/chromium": "^138.0.2",
+    "puppeteer-core": "^24.22.0",
+    "path": "^0.12.7",
+    "fs": "^0.0.1-security"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
@@ -68,7 +67,6 @@ export const LoginPage: React.FC = () => {
         </form>
          <div className="mt-6 text-center text-sm text-zinc-600 border-t pt-4">
             <p className="font-semibold">Demo Accounts:</p>
-            <p>Admin: akhillsai11@gmail.com / akhilsai</p>
             <p>User: user@example.com / password123</p>
             <p className="mt-4 text-xs text-red-600 font-semibold">NOTE: User creation is not available. This is a demo with a pre-configured user list.</p>
         </div>
