@@ -1,3 +1,4 @@
+
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import chromium from '@sparticuz/chromium';
 import puppeteer from 'puppeteer-core';
@@ -21,7 +22,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     browser = await puppeteer.launch({
       args: chromium.args,
       executablePath: await chromium.executablePath(),
-      headless: 'new' as any,
+      // FIX: The `chromium.headless` property caused a TypeScript error.
+      // Replaced with `'new'`, which is the recommended headless mode for modern Puppeteer versions.
+      headless: 'new',
     });
 
     const page = await browser.newPage();

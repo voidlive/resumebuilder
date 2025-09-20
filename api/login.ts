@@ -2,14 +2,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import path from 'path';
 import { promises as fs } from 'fs';
-
-// FIX: Import 'process' to provide correct types for process.cwd()
-import process from 'process';
+// FIX: Import `cwd` from `process` to resolve a type error with `process.cwd()`.
+import { cwd } from 'process';
 
 // Helper function to read the user data from the JSON file.
 async function getUsersData() {
   // Construct a path to the users.json file that works reliably in Vercel's serverless environment.
-  const jsonPath = path.join(process.cwd(), 'api', 'users.json');
+  const jsonPath = path.join(cwd(), 'api', 'users.json');
   const fileContents = await fs.readFile(jsonPath, 'utf8');
   return JSON.parse(fileContents);
 }

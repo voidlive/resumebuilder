@@ -2,13 +2,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import path from 'path';
 import { promises as fs } from 'fs';
-
-// FIX: Import 'process' to provide correct types for process.cwd()
-import process from 'process';
+// FIX: Import `cwd` from `process` to resolve a type error with `process.cwd()`.
+import { cwd } from 'process';
 
 // Helper function to read the user data and strip passwords.
 async function getUsersList() {
-  const jsonPath = path.join(process.cwd(), 'api', 'users.json');
+  const jsonPath = path.join(cwd(), 'api', 'users.json');
   const fileContents = await fs.readFile(jsonPath, 'utf8');
   const users = JSON.parse(fileContents);
 
