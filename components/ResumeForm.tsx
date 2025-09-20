@@ -75,14 +75,15 @@ const ProjectsForm: React.FC<{ items: Project[], onChange: (items: Project[]) =>
     const handleChange = (id: string, field: keyof Project, value: string) => {
         onChange(items.map(item => item.id === id ? { ...item, [field]: value } : item));
     };
-    const addItem = () => onChange([...items, { id: crypto.randomUUID(), name: '', description: '' }]);
+    const addItem = () => onChange([...items, { id: crypto.randomUUID(), name: '', link: '', description: '' }]);
     const removeItem = (id: string) => onChange(items.filter(item => item.id !== id));
     
     return (
         <div>
             {items.map(proj => (
-                <div key={proj.id} className="p-4 border border-zinc-200 rounded-md mb-4 space-y-2 bg-white">
+                <div key={proj.id} className="p-4 border border-zinc-200 rounded-md mb-4 space-y-3 bg-white">
                     <input type="text" placeholder="Project Name" value={proj.name} onChange={e => handleChange(proj.id, 'name', e.target.value)} className={inputClass} />
+                    <input type="url" placeholder="Project Link (e.g., https://github.com/user/repo)" value={proj.link} onChange={e => handleChange(proj.id, 'link', e.target.value)} className={inputClass} />
                     <textarea placeholder="Description" value={proj.description} onChange={e => handleChange(proj.id, 'description', e.target.value)} rows={3} className={textareaClasses} />
                     <button onClick={() => removeItem(proj.id)} className={smallButtonClass}><TrashIcon /> Remove</button>
                 </div>

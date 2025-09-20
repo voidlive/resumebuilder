@@ -193,7 +193,15 @@ const SectionPreview: React.FC<{ section: ResumeSection, colors: TemplateProps['
                 <div>
                     {(content as Project[]).map(proj => (
                         <div key={proj.id} className="mb-2">
-                             <h3 className={`font-bold text-11pt ${templateName === 'technical' ? 'font-roboto-mono' : ''}`}>{proj.name}</h3>
+                             <h3 className={`font-bold text-11pt ${templateName === 'technical' ? 'font-roboto-mono' : ''}`}>
+                                {proj.link ? (
+                                    <a href={formatUrl(proj.link)} target="_blank" rel="noopener noreferrer" className={colors.link}>
+                                        {proj.name}
+                                    </a>
+                                ) : (
+                                    proj.name
+                                )}
+                             </h3>
                              <p className="text-10pt text-black">{proj.description}</p>
                         </div>
                     ))}

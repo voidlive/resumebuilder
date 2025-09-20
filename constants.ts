@@ -72,6 +72,7 @@ export const initialResumeData: ResumeData = {
         {
           id: "proj1",
           name: "Personal Portfolio",
+          link: "https://github.com/janedoe/portfolio",
           description: "A responsive personal portfolio website built with Next.js and deployed on Vercel to showcase my projects and skills."
         }
       ]
